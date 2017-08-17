@@ -1,5 +1,14 @@
 <?php 
-class Index extends CI_Controller
+/**
+ * 后台管理首页
+ * @author lidandan
+ * 
+ * @version 2017-08-17
+ */
+
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class Index extends MY_Controller
 {
     public function __construct()
     {
@@ -8,7 +17,7 @@ class Index extends CI_Controller
     
     public function index()
     {
-        echo 222222222222222;
+        $this -> load -> view('index');
     }
 }
 ?>
