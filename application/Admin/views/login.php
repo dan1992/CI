@@ -2,9 +2,9 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<title>登录 - Bootstrap后台管理系统模版Ace下载</title>
-		<meta name="keywords" content="Bootstrap模版,Bootstrap模版下载,Bootstrap教程,Bootstrap中文" />
-		<meta name="description" content="站长素材提供Bootstrap模版,Bootstrap教程,Bootstrap中文翻译等相关Bootstrap插件下载" />
+		<title>登录 —— CI后台管理系统</title>
+		<meta name="keywords" content="CI后台管理系统" />
+		<meta name="description" content="CI后台管理系统" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 		<base href="<?php echo $base_url.'application/Admin/views/'; ?>" />
@@ -50,7 +50,7 @@
 									<span class="red">ACE</span>
 									<span class="white">CI后台管理系统</span>
 								</h1>
-								<h4 class="blue">&copy; li.dandan@cnmo.com</h4>
+								<h4 class="blue">&copy; 983928220@qq.com</h4>
 							</div>
 
 							<div class="space-6"></div>
