@@ -24,13 +24,18 @@ class User_model extends CI_Model
      */
     public function insert($data)
     {
-        if(empty($data)){
+        if(empty($data))
+        {
             return FALSE;
         }
+        
         $res =  $this -> db -> insert($this -> table, $data);
-        if($res){
+        if($res)
+        {
             return $this -> db -> insert_id();
-        }else{
+        }
+        else
+        {
             return FALSE;
         }
     }
@@ -43,7 +48,8 @@ class User_model extends CI_Model
      */
     public function update($id, $data)
     {
-        if(empty($id) OR empty($data)){
+        if(empty($id) OR empty($data))
+        {
             return FALSE;
         }
         $where = 'id='.$id;
@@ -57,10 +63,11 @@ class User_model extends CI_Model
      */
     public function get_user_by_id($id)
     {
-        if(empty($id)){
+        if(empty($id))
+        {
             return FALSE;
         }
-        $sql   = 'SELECT id,email,username,password,openid,weiboid FROM user WHERE id='.$id;
+        $sql   = 'SELECT id,email,username,password,openid,weiboid FROM '.$this -> table.' WHERE id='.$id;
         $query = $this -> db -> query($sql);
         $row   = $query -> row();
         return $row;
@@ -74,11 +81,13 @@ class User_model extends CI_Model
      */
     public function get_user_info($email, $username)
     {
-        if(empty($email) && empty($username)){
+        if(empty($email) && empty($username))
+        {
             return FALSE;
         }
+        
         $sql = 'SELECT id,email,username,password,openid,weiboid 
-            FROM user 
+            FROM '.$this -> table.' 
             WHERE email="'.$email.'"
             OR username="'.$username.'" 
             LIMIT 1';
@@ -94,16 +103,19 @@ class User_model extends CI_Model
      */
     public function check_user_info($username, $password)
     {
-        if(empty($username) OR empty($password)){
+        if(empty($username) OR empty($password))
+        {
             return FALSE;
         }
         
-        $sql = 'SELECT id FROM user WHERE email="'.$username.'" OR username="'.$username.'" AND password="'.md5($password).'"';
-        echo $sql;
+        $sql = 'SELECT id FROM '.$this -> table.' WHERE email="'.$username.'" OR username="'.$username.'" AND password="'.md5($password).'"';
         $query = $this -> db -> query($sql);
-        if($query -> num_rows() > 0){
+        if($query -> num_rows() > 0)
+        {
             return TRUE;
-        }else{
+        }
+        else
+        {
             return FALSE;
         }
         
