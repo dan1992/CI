@@ -81,8 +81,13 @@
 									       if( ! empty($sub['sub']) && is_array($sub['sub'])):
 									?>
 									       <ul class="submenu">
-									            <?php foreach ($sub['sub'] as $grand):?>
-												<li>
+									            <?php foreach ($sub['sub'] as $grand):
+        									            $class = '';
+        									            if($menu_info['id'] == $sub['id'] OR $menu_info['parent_id'] == $sub['id']):
+        									               $class = 'class="active open"';
+        									            endif;
+									            ?>
+												<li <?php echo $class;?>>
 													<a href="<?php echo base_url().'admin.php/'.$grand['url'];?>">
 														<i class="<?php echo $grand['icon'];?>"></i>
 														<?php echo $grand['name']?>
