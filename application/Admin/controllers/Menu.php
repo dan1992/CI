@@ -19,7 +19,7 @@ class Menu extends MY_Controller
     /**
      * 列表页
      */
-    public function index()
+    public function lists()
     {
         $param['parent_id'] = 0;
         $list = $this -> menu -> get_menu_list($param);
@@ -90,12 +90,12 @@ class Menu extends MY_Controller
                 }
             }
             
-            $data['info']    = $info;
+            $data['info'] = $info;
         }
         
         $param['parent_id'] = 0;
         $list = $this -> menu -> get_menu_list($param);
-        $data['list']    = $this -> create_tree($list);
+        $data['list']  = $this -> create_tree($list);
         
         $data['message'] = $message;
         $data['menu_id'] = $menu_id;

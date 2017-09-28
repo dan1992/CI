@@ -23,6 +23,7 @@ class MY_Controller extends CI_Controller
         
         $request_url = $this -> config -> item('uri_protocol');
         $url = str_replace('/admin.php/', '', $_SERVER['REQUEST_URI']);
+        $url = preg_replace('/\d(\/)?/is', '', $url);
         $data['menu_info'] = $this -> menu -> get_menu_url($url);
         $data['url'] = $url;
         //左侧菜单
