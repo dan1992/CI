@@ -16,7 +16,7 @@ class Menu_model extends CI_Model
         parent::__construct();
         
         //连接数据库
-        $this -> load -> database();
+        $this->load->database();
     }
     
     /**
@@ -26,19 +26,15 @@ class Menu_model extends CI_Model
      */
     public function add_menu($data)
     {
-        if(empty($data))
-        {
-            return FALSE;
+        if (empty($data)) {
+            return false;
         }
         
-        $res =  $this -> db -> insert($this -> table, $data);
-        if($res)
-        {
-            return $this -> db -> insert_id();
-        }
-        else 
-        {
-            return FALSE;
+        $res =  $this->db->insert($this->table, $data);
+        if ($res) {
+            return $this->db->insert_id();
+        } else {
+            return false;
         }
     }
     
@@ -50,14 +46,13 @@ class Menu_model extends CI_Model
      */
     public function update_menu($id, $data)
     {
-        if(empty($id) && empty($data))
-        {
-            return FALSE;
+        if (empty($id) && empty($data)) {
+            return false;
         }
         
         $where = 'id = '.$id;
         
-        $res = $this -> db -> update($this -> table, $data, $where);
+        $res = $this->db->update($this->table, $data, $where);
         return $res;
     }
     
@@ -73,25 +68,21 @@ class Menu_model extends CI_Model
     {
         $field = empty($field) ? 'id, name, url, icon, status, sort, description, parent_id' : $field;
         
-        $this -> db -> where('is_del=', 0);
+        $this->db->where('is_del=', 0);
         
-        if(isset($param['parent_id']))
-        {
-            $this -> db -> where('parent_id=', $param['parent_id']);
+        if (isset($param['parent_id'])) {
+            $this->db->where('parent_id=', $param['parent_id']);
         }
         
-        $this -> db -> order_by($order);
+        $this->db->order_by($order);
         
-        $this -> db -> limit($limit, $start);
+        $this->db->limit($limit, $start);
         
-        $query = $this -> db -> get($this -> table);
-        if($query -> num_rows() > 0)
-        {
-            return $query -> result_array();
-        }
-        else
-        {
-            return FALSE;
+        $query = $this->db->get($this->table);
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return false;
         }
     }
     
@@ -103,17 +94,16 @@ class Menu_model extends CI_Model
      */
     public function get_menu_info($id, $field = '')
     {
-        if(empty($id))
-        {
-            return FALSE;
+        if (empty($id)) {
+            return false;
         }
         $field = empty($field) ? 'id, name, url, icon, status, sort, description, parent_id' : $field;
         
-        $sql = 'SELECT '.$field.' FROM '.$this -> table.' WHERE id = '.$id;
+        $sql = 'SELECT '.$field.' FROM '.$this->table.' WHERE id = '.$id;
         
-        $query = $this -> db -> query($sql);
+        $query = $this->db->query($sql);
         
-        return $query -> row_array();
+        return $query->row_array();
     }
     
     /**
@@ -124,18 +114,17 @@ class Menu_model extends CI_Model
      */
     public function get_menu_url($url, $field = '')
     {
-        if(empty($url))
-        {
-            return FALSE;
+        if (empty($url)) {
+            return false;
         }
         
         $field = empty($field) ? 'id, name, status, parent_id' : $field;
         
-        $sql = 'SELECT '.$field.' FROM '.$this -> table.' WHERE url = "'.$url.'"';
+        $sql = 'SELECT '.$field.' FROM '.$this->table.' WHERE url = "'.$url.'"';
         
-        $query = $this -> db -> query($sql);
+        $query = $this->db->query($sql);
         
-        return $query -> row_array();
+        return $query->row_array();
     }
 }
 
