@@ -1268,7 +1268,7 @@
 			  var previousPoint = null;
 			
 			  placeholder.on('plothover', function (event, pos, item) {
-				if(item) {
+				if (item) {
 					if (previousPoint != item.seriesIndex) {
 						previousPoint = item.seriesIndex;
 						var tip = item.series['label'] + " : " + item.series['percent']+'%';

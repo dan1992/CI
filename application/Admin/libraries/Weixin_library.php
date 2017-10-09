@@ -11,8 +11,8 @@ class Weixin_library
     
     public function __construct($param)
     {
-        $this -> app_id     = $param['app_id'];
-        $this -> app_secret = $param['app_secret'];
+        $this->app_id     = $param['app_id'];
+        $this->app_secret = $param['app_secret'];
     }
     
     /**
@@ -21,8 +21,8 @@ class Weixin_library
      */
     public function get_access_token()
     {
-        $url    = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='.$this -> app_id.'&secret='.$this -> app_secret;
-        $result = $this -> https_request($url);
+        $url    = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='.$this->app_id.'&secret='.$this->app_secret;
+        $result = $this->https_request($url);
         $result = json_decode($result, TRUE);
         return $result['access_token'];
     }
@@ -36,7 +36,7 @@ class Weixin_library
     public function create_weixin_menu($access_token, $menu)
     {
         $url    = 'https://api.weixin.qq.com/cgi-bin/menu/create?access_token='.$access_token;
-        $result = $this -> https_request($url, $menu);
+        $result = $this->https_request($url, $menu);
         $result = json_decode($result, TRUE);
         return $result;
     }
@@ -49,7 +49,7 @@ class Weixin_library
     public function get_weixin_menu($access_token)
     {
         $url = 'https://api.weixin.qq.com/cgi-bin/menu/get?access_token='.$access_token;
-        $result = $this -> https_request($url);
+        $result = $this->https_request($url);
         $result = json_decode($result, TRUE);
         return $result;
     }
@@ -64,7 +64,7 @@ class Weixin_library
     public function get_user_info($access_token, $openid, $lang = 'zh_CN')
     {
         $url = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token='.$access_token.'&openid='.$openid.'&lang='.$lang;
-        $result = $this -> https_request($url);
+        $result = $this->https_request($url);
         $result = json_decode($result, TRUE);
         return $result;
     }
@@ -72,7 +72,7 @@ class Weixin_library
     public function get_user_list($access_token, $next_openid)
     {
         $url = 'https://api.weixin.qq.com/cgi-bin/user/get?access_token='.$access_token.'&next_openid='.$next_openid;
-        $result = $this -> https_request($url);
+        $result = $this->https_request($url);
         $result = json_decode($result, TRUE);
         return $result;
     }
@@ -101,9 +101,9 @@ class Weixin_library
     public function get_oauth_access_token($code)
     {
         $url               = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid='.$this->app_id.'&secret='.$this->app_secret.'&code='.$code.'&grant_type=authorization_code';
-        $access_token_json = $this -> https_request($url);
+        $access_token_json = $this->https_request($url);
         $access_token_arr  = array();
-        if(!empty($access_token_json)){
+        if (!empty($access_token_json)) {
             $access_token_arr = json_decode($access_token_json, TRUE);
         }
         return $access_token_arr;
@@ -118,9 +118,9 @@ class Weixin_library
     public function get_oauth_user_info($open_id, $access_token)
     {
         $url          = 'https://api.weixin.qq.com/sns/userinfo?access_token='.$access_token.'&openid='.$open_id.'&lang=zh_CN';
-        $user_info_json = $this -> https_request($url);
+        $user_info_json = $this->https_request($url);
         $user_info     = array();
-        if(!empty($user_info_json)){
+        if (!empty($user_info_json)) {
             $user_info = json_decode($user_info_json, TRUE);
         }
         return $user_info;
@@ -134,7 +134,7 @@ class Weixin_library
     public function get_jsapi_ticket($access_token)
     {
         $url          = 'https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token='.$access_token.'&type=jsapi';
-        $jsapi_ticket = $this -> https_request($url);
+        $jsapi_ticket = $this->https_request($url);
         $jsapi_ticket = json_decode($jsapi_ticket, TRUE);
         return $jsapi_ticket;
     }

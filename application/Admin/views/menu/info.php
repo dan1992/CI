@@ -57,15 +57,15 @@
                                 	<div class="col-sm-9">
                                 		<select class="col-xs-10 col-sm-5" id="parent" name="parent">
                                 			<option value="0">顶级菜单</option>
-                                			<?php if( ! empty($list) && is_array($list)){
+                                			<?php if ( ! empty($list) && is_array($list)) {
                                 			         foreach ($list as $key => $val):
                                 			?>
                                 			<option <?php if(isset($info['parent_id']) && $info['parent_id'] == $val['id']){echo 'selected';}?> value="<?php echo $val['id'];?>"><?php echo $val['name'];?></option>
-                                			<?php if($val['sub'] && is_array($val['sub'])){
+                                			<?php if ($val['sub'] && is_array($val['sub'])) {
                                 			         foreach ($val['sub'] as $sub):
                                 			?>
                                 			<option <?php if(isset($info['parent_id']) && $info['parent_id'] == $sub['id']){echo 'selected';}?> value="<?php echo $sub['id'];?>">&nbsp;&nbsp;--<?php echo $sub['name'];?></option>
-                                			<?php if($sub['sub'] && is_array($sub['sub'])){
+                                			<?php if ($sub['sub'] && is_array($sub['sub'])) {
                                 			         foreach ($sub['sub'] as $grand):
                                 			?>
                                 			<option <?php if(isset($info['parent_id']) && $info['parent_id'] == $grand['id']){echo 'selected';}?> value="<?php echo $grand['id'];?>">&nbsp;&nbsp;&nbsp;&nbsp;----<?php echo $grand['name'];?></option>

@@ -34,7 +34,7 @@
 					</div><!-- #sidebar-shortcuts -->
 
 					<ul class="nav nav-list">
-						<li <?php if($url == ''):
+						<li <?php if ($url == ''):
 						              echo 'class="active"';
 						          endif;
 						    ?>>
@@ -45,7 +45,7 @@
 						</li>
 
 						<?php 
-						      if( ! empty($menu) && is_array($menu)):
+						      if (!empty($menu) && is_array($menu)):
 						          foreach ($menu as $key => $val):
 						              $class = '';
 						              if($menu_info['id'] == $val['id'] OR $menu_info['parent_id'] == $val['id']):
@@ -56,13 +56,13 @@
 							<a href="<?php echo base_url().'admin.php/'.$val['url'];?>" <?php if( ! empty($val['sub'])){echo 'class="dropdown-toggle"';}?>>
 								<i class="<?php echo $val['icon'];?>"></i>
 								<span class="menu-text"> <?php echo $val['name'];?> </span>
-								<?php if( ! empty($val['sub'])):
+								<?php if (!empty($val['sub'])):
 								        echo '<b class="arrow icon-angle-down"></b>';
 								      endif;
 								?>
 							</a>
 							<?php 
-							     if( ! empty($val['sub']) && is_array($val['sub'])):
+							     if (!empty($val['sub']) && is_array($val['sub'])):
 							?>
 							<ul class="submenu">
 							     <?php foreach ($val['sub'] as $sub):
@@ -78,7 +78,7 @@
 										<?php if( ! empty($sub['sub'])){echo '<b class="arrow icon-angle-down"></b>';}?>
 									</a>
 									<?php 
-									       if( ! empty($sub['sub']) && is_array($sub['sub'])):
+									       if (!empty($sub['sub']) && is_array($sub['sub'])):
 									?>
 									       <ul class="submenu">
 									            <?php foreach ($sub['sub'] as $grand):

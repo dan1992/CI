@@ -6,20 +6,18 @@ class Wxmenu_model extends CI_Model
     public function __construct()
     {
         parent::__construct();
-        $this -> load -> database();
+        $this->load->database();
     }
     
     public function add($data)
     {
-        if(empty($data))
-        {
-            return FALSE;
+        if (empty($data)) {
+            return false;
         }
         
-        $res = $this -> db -> insert($this -> table, $data);
-        if($res)
-        {
-            return $this -> db -> insert_id();
+        $res = $this->db->insert($this->table, $data);
+        if ($res) {
+            return $this->db->insert_id();
         }
     }
 }

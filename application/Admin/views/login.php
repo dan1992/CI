@@ -304,7 +304,7 @@ function getcaptcha(){
 	$.post('<?php echo base_url();?>admin.php/login/regverify?'+Math.random(),'',function(data){
         var data = eval('('+data+')');
         
-        if(data.status == 1){
+        if (data.status == 1) {
         	console.log(data)
             $('#regyzm').attr('src', 'static/captcha/'+data.verify['filename']);
         }

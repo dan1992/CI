@@ -65,7 +65,7 @@
                             		</thead>
                             
                             		<tbody>
-                            		<?php if( ! empty($list) && is_array($list)){
+                            		<?php if (!empty($list) && is_array($list)) {
                             		          foreach ($list as $val):
                             		?>
                             			<tr>
@@ -98,7 +98,7 @@
                             					</div>
                             				</td>
                             			</tr>
-                            			<?php if( ! empty($val['sub']) && is_array($val['sub'])){
+                            			<?php if (!empty($val['sub']) && is_array($val['sub'])) {
                             			         foreach ($val['sub'] as $sub):
                             			?>
                             			<tr>
@@ -131,7 +131,7 @@
                             					</div>
                             				</td>
                             			</tr>
-                            			<?php if( ! empty($sub['sub']) && is_array($sub['sub'])){
+                            			<?php if (!empty($sub['sub']) && is_array($sub['sub'])) {
                             			         foreach ($sub['sub'] as $grand):
                             			?>
                             			<tr>
@@ -186,25 +186,20 @@
 function del_menu(menu_id, obj)
 {
 
-	if(confirm('确定要删除吗？')){
+	if (confirm('确定要删除吗？')) {
 		$.post('<?=base_url()?>admin.php/menu/del/'+menu_id, function(data){
 	        var data = eval('('+data+')');
-	        if(data.status == 1)
-	        {
+	        if (data.status == 1) {
 	        	$(obj).parents('tr').remove();
 	            alert('删除成功');
 	            return false;
-	        }
-	        else
-	        {
+	        } else {
 	            alert('删除失败');
 	            return false;
 	        }
 	    });
 	    return true;
-	}
-	else
-	{
+	} else {
 	    return false;
 	}
     

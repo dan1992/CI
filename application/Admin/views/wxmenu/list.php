@@ -180,12 +180,11 @@ function menu(menu_id)
 	var leng = $('#menu_sub_'+menu_id).children().length;
 	var class_name = '';
 	
-	if(leng == 0)
-	{
+	if (leng == 0) {
 	    class_name = 'col-sm-offset-1 ';
 	}
 	
-	if(leng > 4){
+	if (leng > 4) {
 		alert('一级菜单最多包含5个二级菜单');
 	    return false;
 	}
@@ -224,10 +223,9 @@ function menu(menu_id)
 	    html += '</div>';
 	    $('#menu_sub_'+menu_id).append(html);
 
-	    $.each($('#menu_sub_'+menu_id).children(), function(index, content){
+	    $.each($('#menu_sub_'+menu_id).children(), function(index, content) {
 		    var ch = $(content).children().length;
-		    if(ch == 0)
-		    {
+		    if (ch == 0) {
 		        $(content).remove();
 			}
 		});

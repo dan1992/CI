@@ -14,7 +14,7 @@ class User_model extends CI_Model
         parent::__construct();
         
         //手动链接数据库
-        $this -> load -> database();
+        $this->load->database();
     }
     
     /**
@@ -24,19 +24,15 @@ class User_model extends CI_Model
      */
     public function insert($data)
     {
-        if(empty($data))
-        {
-            return FALSE;
+        if (empty($data)) {
+            return false;
         }
         
-        $res =  $this -> db -> insert($this -> table, $data);
-        if($res)
-        {
-            return $this -> db -> insert_id();
-        }
-        else
-        {
-            return FALSE;
+        $res =  $this->db->insert($this->table, $data);
+        if ($res) {
+            return $this->db->insert_id();
+        } else {
+            return false;
         }
     }
     
@@ -48,12 +44,11 @@ class User_model extends CI_Model
      */
     public function update($id, $data)
     {
-        if(empty($id) OR empty($data))
-        {
-            return FALSE;
+        if (empty($id) OR empty($data)) {
+            return false;
         }
         $where = 'id='.$id;
-        return $this -> db -> update($this -> table, $data, $where);
+        return $this->db->update($this->table, $data, $where);
     }
     
     /**
@@ -63,13 +58,12 @@ class User_model extends CI_Model
      */
     public function get_user_by_id($id)
     {
-        if(empty($id))
-        {
-            return FALSE;
+        if (empty($id)) {
+            return false;
         }
-        $sql   = 'SELECT id,email,username,password,openid,weiboid FROM '.$this -> table.' WHERE id='.$id;
-        $query = $this -> db -> query($sql);
-        $row   = $query -> row();
+        $sql   = 'SELECT id,email,username,password,openid,weiboid FROM '.$this->table.' WHERE id='.$id;
+        $query = $this->db->query($sql);
+        $row   = $query->row();
         return $row;
     }
     
@@ -81,18 +75,17 @@ class User_model extends CI_Model
      */
     public function get_user_info($email, $username)
     {
-        if(empty($email) && empty($username))
-        {
-            return FALSE;
+        if (empty($email) && empty($username)) {
+            return false;
         }
         
         $sql = 'SELECT id,email,username,password,openid,weiboid 
-            FROM '.$this -> table.' 
+            FROM '.$this->table.' 
             WHERE email="'.$email.'"
             OR username="'.$username.'" 
             LIMIT 1';
-        $query = $this -> db -> query($sql);
-        return $query -> row();
+        $query = $this->db->query($sql);
+        return $query->row();
     }
     
     /**
@@ -103,20 +96,16 @@ class User_model extends CI_Model
      */
     public function check_user_info($username, $password)
     {
-        if(empty($username) OR empty($password))
-        {
-            return FALSE;
+        if (empty($username) OR empty($password)) {
+            return false;
         }
         
-        $sql = 'SELECT id FROM '.$this -> table.' WHERE email="'.$username.'" OR username="'.$username.'" AND password="'.md5($password).'"';
-        $query = $this -> db -> query($sql);
-        if($query -> num_rows() > 0)
-        {
+        $sql = 'SELECT id FROM '.$this->table.' WHERE email="'.$username.'" OR username="'.$username.'" AND password="'.md5($password).'"';
+        $query = $this->db->query($sql);
+        if ($query->num_rows() > 0) {
             return TRUE;
-        }
-        else
-        {
-            return FALSE;
+        } else {
+            return false;
         }
         
     }
