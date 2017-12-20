@@ -1,7 +1,7 @@
-<?php 
+<?php
 /**
  * 菜单管理
- * 
+ *
  * @author lidandan
  * 
  * @version 2017-08-18
@@ -15,31 +15,45 @@ class Menu extends MY_Controller
     {
         parent::__construct();
     }
-    
+
     /**
      * 列表页
      */
-    public function lists()
+    public function lists($page = 1)
     {
         $param['parent_id'] = 0;
-        $list = $this->menu->get_menu_list($param);
-        $data['list'] = $this->create_tree($list);
-        
+        $data['pid'] = $this->menu->get_menu_list($param);
+        $data['list'] = $this->create_tree($data['pid'], $param);
+
+        // $perpage = 5;
+        // $start = ($page-1)*$perpage;
+        // $data['list'] = array_splice($list, $start, $perpage);
+        // //分页类
+        // $this->load->library('pagination');
+
+        // $pagination['base_url'] = site_url().'/menu/lists';
+        // $pagination['total_rows'] = $this->menu->get_menu_num();
+        // $pagination['per_page'] = $perpage;
+
+        // $this->pagination->initialize($pagination);
+
+        // $data['pagination'] = $this->pagination->create_links();
+
         $this->load->view('menu/list', $data);
     }
-    
+
     /**
      * 添加/更新
      */
     public function detail($menu_id = '')
     {
         $message = '';
-        
+
         if (!empty($menu_id)) {
             $info = $this->menu->get_menu_info($menu_id);
-            $data['info']    = $info;
+            $data['info'] = $info;
         }
-        
+
         $info = array();
         $info['name'] = isset($_POST['menu_name']) ? addslashes(trim($_POST['menu_name'])) : '';
         $info['url']  = isset($_POST['menu_url']) ? addslashes(trim($_POST['menu_url'])) : '';
@@ -48,17 +62,17 @@ class Menu extends MY_Controller
         $info['sort']   = isset($_POST['paixu']) ? (int)$_POST['paixu'] : 99;
         $info['parent_id']   = isset($_POST['parent']) ? (int)$_POST['parent'] : 0;
         $info['description'] = isset($_POST['desc']) ? addslashes(trim($_POST['desc'])) : '';
-        
+
         if (!empty($_POST)) {
-            
+
             if (empty($info['name'])) {
                 $message = '菜单名称不能为空';
             }
-            
+
             if (empty($info['url'])) {
                 $message = '链接不能为空';
             }
-            
+
             if (empty($menu_id)) {
                 $info['addtime'] = date('Y-m-d H:i:s', time());
                 $info['adduser'] = 'xx';
@@ -76,20 +90,20 @@ class Menu extends MY_Controller
                     $message = '更新失败';
                 }
             }
-            
+
             $data['info'] = $info;
         }
-        
+
         $param['parent_id'] = 0;
         $list = $this->menu->get_menu_list($param);
-        $data['list']  = $this->create_tree($list);
-        
+        $data['list']  = $this->create_tree($list, $param);
+
         $data['message'] = $message;
         $data['menu_id'] = $menu_id;
-        
+
         $this->load->view('menu/info', $data);
     }
-    
+
     /**
      * 删除
      */
@@ -99,7 +113,7 @@ class Menu extends MY_Controller
             echo json_encode(array('status' => 0, 'info' => '参数错误'));
             exit;
         }
-        
+
         $info['is_del'] = 1;
         $res = $this->menu->update_menu($menu_id, $info);
         if ($res) {

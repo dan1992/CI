@@ -14,11 +14,12 @@ class Wxmenu_model extends CI_Model
         if (empty($data)) {
             return false;
         }
-        
+        $data['addtime'] = date('Y-m-d H:i:s',time());
         $res = $this->db->insert($this->table, $data);
         if ($res) {
             return $this->db->insert_id();
         }
+        return false;
     }
 }
 ?>

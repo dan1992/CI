@@ -14,28 +14,7 @@
 
 				<?php include_once set_realpath(APPPATH.'views/public/sidebar.php');?>
 				<div class="main-content">
-					<div class="breadcrumbs" id="breadcrumbs">
-						<script type="text/javascript">
-							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
-						</script>
-
-						<ul class="breadcrumb">
-							<li>
-								<i class="icon-home home-icon"></i>
-								<a href="#">首页</a>
-							</li>
-							<li class="active">控制台</li>
-						</ul><!-- .breadcrumb -->
-
-						<div class="nav-search" id="nav-search">
-							<form class="form-search">
-								<span class="input-icon">
-									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
-									<i class="icon-search nav-search-icon"></i>
-								</span>
-							</form>
-						</div><!-- #nav-search -->
-					</div>
+					<?php include_once set_realpath(APPPATH.'views/public/breadcrumb.php');?>
 
 					<div class="page-content">
 						<div class="page-header">
@@ -177,13 +156,19 @@
 //子菜单
 function menu(menu_id)
 {
-	var leng = $('#menu_sub_'+menu_id).children().length;
 	var class_name = '';
-	
+	$.each($('#menu_sub_'+menu_id).children(), function(index, content) {
+		var ch = $(content).children().length;
+		if (ch == 0) {
+			$(content).remove();
+		}
+	});
+
+	var leng = $('#menu_sub_'+menu_id).children().length;
 	if (leng == 0) {
-	    class_name = 'col-sm-offset-1 ';
+		class_name = 'col-sm-offset-1 ';
 	}
-	
+
 	if (leng > 4) {
 		alert('一级菜单最多包含5个二级菜单');
 	    return false;
@@ -222,13 +207,6 @@ function menu(menu_id)
 	    html += '</div>';
 	    html += '</div>';
 	    $('#menu_sub_'+menu_id).append(html);
-
-	    $.each($('#menu_sub_'+menu_id).children(), function(index, content) {
-		    var ch = $(content).children().length;
-		    if (ch == 0) {
-		        $(content).remove();
-			}
-		});
 }
 
 </script>

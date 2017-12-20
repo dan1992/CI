@@ -1,24 +1,24 @@
 <?php 
 /**
  * 菜单管理
- * 
+ *
  * @author lidandan
- * 
+ *
  * @version 2017-08-18
  *
  */
 class Menu_model extends CI_Model
 {
     private $table = 'menu';
-    
+
     public function __construct()
     {
         parent::__construct();
-        
+
         //连接数据库
         $this->load->database();
     }
-    
+
     /**
      * 添加菜单
      * @param array $data
@@ -29,7 +29,7 @@ class Menu_model extends CI_Model
         if (empty($data)) {
             return false;
         }
-        
+
         $res =  $this->db->insert($this->table, $data);
         if ($res) {
             return $this->db->insert_id();
@@ -37,7 +37,7 @@ class Menu_model extends CI_Model
             return false;
         }
     }
-    
+
     /**
      * 更新菜单
      * @param number $id
@@ -49,13 +49,13 @@ class Menu_model extends CI_Model
         if (empty($id) && empty($data)) {
             return false;
         }
-        
+
         $where = 'id = '.$id;
-        
+
         $res = $this->db->update($this->table, $data, $where);
         return $res;
     }
-    
+
     /**
      * 获取菜单列表
      * @param array  $param
@@ -67,17 +67,19 @@ class Menu_model extends CI_Model
     public function get_menu_list($param = array(), $field = '', $order = 'sort asc', $start = 0, $limit = 0)
     {
         $field = empty($field) ? 'id, name, url, icon, status, sort, description, parent_id' : $field;
-        
+
         $this->db->where('is_del=', 0);
-        
+
         if (isset($param['parent_id'])) {
             $this->db->where('parent_id=', $param['parent_id']);
         }
-        
+        if (isset($param['status'])) {
+            $this->db->where('status=', $param['status']);
+        }
         $this->db->order_by($order);
-        
+
         $this->db->limit($limit, $start);
-        
+
         $query = $this->db->get($this->table);
         if ($query->num_rows() > 0) {
             return $query->result_array();
@@ -85,7 +87,7 @@ class Menu_model extends CI_Model
             return false;
         }
     }
-    
+
     /**
      * 获取菜单信息
      * @param number $id
@@ -98,14 +100,14 @@ class Menu_model extends CI_Model
             return false;
         }
         $field = empty($field) ? 'id, name, url, icon, status, sort, description, parent_id' : $field;
-        
+
         $sql = 'SELECT '.$field.' FROM '.$this->table.' WHERE id = '.$id;
-        
+
         $query = $this->db->query($sql);
-        
+
         return $query->row_array();
     }
-    
+
     /**
      * 根据链接获取菜单信息
      * @param string $url
@@ -117,14 +119,23 @@ class Menu_model extends CI_Model
         if (empty($url)) {
             return false;
         }
-        
+
         $field = empty($field) ? 'id, name, status, parent_id' : $field;
-        
+
         $sql = 'SELECT '.$field.' FROM '.$this->table.' WHERE url = "'.$url.'"';
-        
+
         $query = $this->db->query($sql);
-        
+
         return $query->row_array();
+    }
+
+    /**
+     * 菜单数量
+     * @return
+     */
+    public function get_menu_num()
+    {
+        return $this->db->count_all($this->table);
     }
 }
 
