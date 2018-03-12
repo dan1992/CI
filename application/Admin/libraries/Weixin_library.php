@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * 微信API
  * @author lidandan
@@ -8,13 +8,13 @@ class Weixin_library
 {
     public $app_id;
     public $app_secret;
-    
+
     public function __construct($param)
     {
         $this->app_id     = $param['app_id'];
         $this->app_secret = $param['app_secret'];
     }
-    
+
     /**
      * 获取access_token
      * @return mixed
@@ -26,7 +26,7 @@ class Weixin_library
         $result = json_decode($result, TRUE);
         return $result['access_token'];
     }
-    
+
     /**
      * 创建自定义菜单
      * @param string $access_token
@@ -40,11 +40,11 @@ class Weixin_library
         $result = json_decode($result, TRUE);
         return $result;
     }
-    
+
     /**
      * 获取自定义菜单
      * @param string $access_token
-     * 
+     *
      */
     public function get_weixin_menu($access_token)
     {
@@ -53,7 +53,7 @@ class Weixin_library
         $result = json_decode($result, TRUE);
         return $result;
     }
-    
+
     /**
      * 获取用户基本信息
      * @param string $access_token
@@ -68,7 +68,7 @@ class Weixin_library
         $result = json_decode($result, TRUE);
         return $result;
     }
-    
+
     public function get_user_list($access_token, $next_openid)
     {
         $url = 'https://api.weixin.qq.com/cgi-bin/user/get?access_token='.$access_token.'&next_openid='.$next_openid;
@@ -76,7 +76,7 @@ class Weixin_library
         $result = json_decode($result, TRUE);
         return $result;
     }
-    
+
     /**
      * 获取授权处理URL
      * @param string $url
@@ -92,7 +92,7 @@ class Weixin_library
         $codeurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='.$this->app_id.'&redirect_uri='.$url.'&response_type=code&scope='.$scope.'&state='.$state.'#wechat_redirect';
         return $codeurl;
     }
-    
+
     /**
      * 通过code换取网页授权access_token
      * @param string $code
@@ -108,7 +108,7 @@ class Weixin_library
         }
         return $access_token_arr;
     }
-    
+
     /**
      * 通过网页授权获取用户信息
      * @param string $open_id        用户openid
@@ -125,7 +125,7 @@ class Weixin_library
         }
         return $user_info;
     }
-    
+
     /**
      * 获取jsapi_ticket
      * @param string $access_token
@@ -138,7 +138,7 @@ class Weixin_library
         $jsapi_ticket = json_decode($jsapi_ticket, TRUE);
         return $jsapi_ticket;
     }
-    
+
     /**
      * https请求（支持GET和POST）
      *
@@ -148,28 +148,28 @@ class Weixin_library
     protected function https_request($url, $data = NULL)
     {
         //return file_get_contents($url);
-    
-         $curl = curl_init();
-         curl_setopt($curl, CURLOPT_URL, $url);
-         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
-         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
-         if (!empty($data)) {
-             curl_setopt($curl, CURLOPT_POST, 1);
-             curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-         }
-         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-         $output = curl_exec($curl);
-         curl_close($curl);
+
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+        if (!empty($data)) {
+            curl_setopt($curl, CURLOPT_POST, 1);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+        }
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        $output = curl_exec($curl);
+        curl_close($curl);
         return $output;
         /* $curl = curl_init();
          curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
          curl_setopt($curl, CURLOPT_TIMEOUT, 500);
          curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, TRUE);
          curl_setopt($curl, CURLOPT_URL, $url);
-    
+
          $res = curl_exec($curl);
          curl_close($curl);
-    
+
         return $res; */
     }
 }

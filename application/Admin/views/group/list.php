@@ -54,10 +54,16 @@
                                             <td><?php echo $val['description'];?></td>
                                             <td>
                                                 <div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
-                                                    <a href="<?php echo base_url().'admin.php/group/detail/'.$val['id']?>">
+                                                    <a href="<?php echo base_url().'admin.php/group/detail/'.$val['id']; ?>">
                                                     <button class="btn btn-xs btn-info">
                                                         <i class="icon-edit bigger-120"></i>
                                                         编辑
+                                                    </button>
+                                                    </a>
+                                                    <a href="<?php echo site_url('group/power/'.$val['id']); ?>">
+                                                    <button class="btn btn-xs btn-success">
+                                                        <i class="icon-check bigger-120"></i>
+                                                        权限
                                                     </button>
                                                     </a>
                                                     <a>

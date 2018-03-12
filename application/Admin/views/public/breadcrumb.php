@@ -8,8 +8,24 @@
             <i class="icon-home home-icon"></i>
             <a href="<?php echo site_url();?>">首页</a>
         </li>
-
-        <li class="active">控制台</li>
+        <?php if ($breadcrumb && is_array($breadcrumb)) {
+                    foreach ($breadcrumb as $key => $value) {
+                        if ($value['url'] == $url) {
+                            echo '<li class="active">'.$value['name'].'</li>';
+                        } else {
+        ?>
+        <li>
+            <a href="<?php if (strpos($value['url'], 'index') !== false) {echo site_url(str_replace('index', 'lists', $value['url']));} else {echo site_url($value['url']);} ?>">
+                <?php echo $value['name'];?>
+            </a>
+        </li>
+        <?php
+                        }
+                    }
+                } else {
+                    echo '<li class="active">控制台</li>';
+                }
+        ?>
     </ul><!-- .breadcrumb -->
 
     <div class="nav-search" id="nav-search">

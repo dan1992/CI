@@ -62,7 +62,8 @@ class Login extends CI_Controller
                 $this->load->helper('cookie');
                 $this->load->library('Public_library');
                 $auth = $this->public_library->password($user_info['username'].$user_info['password']);
-                set_cookie('ci_auth', $auth);
+
+                $this->input->set_cookie('ci_auth', $auth, 3600);
 
                 $data['message'] = '登录成功';
                 header('Location:'.site_url());

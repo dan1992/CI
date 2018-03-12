@@ -28,7 +28,7 @@
                     <?php }?>
                         <div class="row">
                             <h4>用户组名称：<?php echo $info['name'];?></h4>
-                            <h4>权限</h4>
+                            <h4><input type="checkbox" name="menu_id" value="all" />权限</h4>
                             <!-- 内容  -->
                             <div class="col-xs-12">
                                 <?php if (!empty($list) && is_array($list)):

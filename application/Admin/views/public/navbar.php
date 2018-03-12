@@ -229,7 +229,7 @@
 								<img class="nav-user-photo" src="static/avatars/user.jpg" alt="Jason's Photo" />
 								<span class="user-info">
 									<small>欢迎光临,</small>
-									Jason
+									<?php echo $user_info['name'];?>
 								</span>
 
 								<i class="icon-caret-down"></i>

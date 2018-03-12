@@ -4,7 +4,7 @@
  * @Author: lidandan
  * @Date:   2017-12-21
  */
-class Group extends CI_Model
+class Group_model extends CI_Model
 {
     private $group = 'user_group';
 
@@ -20,12 +20,12 @@ class Group extends CI_Model
      * @param  array $data 插入数据
      * @return number
      */
-    public function insert($data)
+    public function add_group($data)
     {
         if (empty($data)) {
             return false;
         }
-        $data['addtime'] = data('Y-m-d H:i:s', time());
+        $data['addtime'] = date('Y-m-d H:i:s', time());
         $res = $this->db->insert($this->group, $data);
         if ($res) {
             return $this->db->insert_id($this->group);
@@ -40,7 +40,7 @@ class Group extends CI_Model
      * @param  array  $data 更新数据
      * @return bool true/false
      */
-    public function update($id, $data)
+    public function update_group($id, $data)
     {
         if (empty($id) OR empty($data)) {
             return false;
@@ -59,9 +59,9 @@ class Group extends CI_Model
         if (empty($id)) {
             return false;
         }
-        $this->db->where('id', id);
+        $this->db->where('id', $id);
         $query = $this->db->get($this->group);
-        return $query->row();
+        return $query->row_array();
     }
 
     /**
@@ -71,11 +71,12 @@ class Group extends CI_Model
      * @param  number $limit 每页数量
      * @return array  用户组列表
      */
-    public function get_group_list($param, $start, $limit)
+    public function get_group_list($param = array(), $start = 0, $limit = 0)
     {
-        if (isset($param['name'])) {
+        if (!empty($param['name'])) {
             $this->db->like('name', $param['name']);
         }
+        $this->db->where('is_del', 0);
         $this->db->order_by('id','DESC');
         $query = $this->db->get($this->group, $limit, $start);
         return $query->result_array();
@@ -86,12 +87,12 @@ class Group extends CI_Model
      * @param  array $param 查询条件
      * @return number 用户组数量
      */
-    public function get_group_num($param)
+    public function get_group_num($param = array())
     {
-        if (isset($param['name'])) {
+        if (!empty($param['name'])) {
             $this->db->like('name', $param['name']);
         }
-        $this->db->form($this->group);
-        return $this->db->count_all_results();
+        $this->db->where('is_del', 0);
+        return $this->db->count_all_results($this->group);
     }
 }

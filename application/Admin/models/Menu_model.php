@@ -46,7 +46,7 @@ class Menu_model extends CI_Model
      */
     public function update_menu($id, $data)
     {
-        if (empty($id) && empty($data)) {
+        if (empty($id) OR empty($data)) {
             return false;
         }
 
@@ -120,7 +120,7 @@ class Menu_model extends CI_Model
             return false;
         }
 
-        $field = empty($field) ? 'id, name, status, parent_id' : $field;
+        $field = empty($field) ? 'id, name, status, url, parent_id' : $field;
 
         $sql = 'SELECT '.$field.' FROM '.$this->table.' WHERE url = "'.$url.'"';
 

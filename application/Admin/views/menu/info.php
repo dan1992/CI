@@ -63,7 +63,6 @@
                                 <div class="space-4"></div>
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label no-padding-right" for="menu_url"> 链接</label>
-                                    
                                     <div class="col-sm-9">
                                         <input type="text" id="menu_url" name="menu_url" placeholder="如：index/index" class="col-xs-10 col-sm-5" value="<?php echo empty($info['url']) ? '' : $info['url'];?>" />
                                     </div>
@@ -122,7 +121,7 @@
                                 </div>
                                 </form>
                             </div>
-                        </div>  
+                        </div>
                     </div><!-- /.page-content -->
                 </div><!-- /.main-content -->
 

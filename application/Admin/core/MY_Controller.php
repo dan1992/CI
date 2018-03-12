@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * 基类
  *
@@ -10,6 +10,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class MY_Controller extends CI_Controller
 {
+    public $user_info;
     public function __construct()
     {
         parent::__construct();
@@ -23,10 +24,10 @@ class MY_Controller extends CI_Controller
         //路径辅助函数
         $this->load->helper('path');
 
-        // if (!$this->checkLogin()) {
-        //     header('Location:'.site_url().'/login');
-        //     exit;
-        // }
+        if (!$this->checkLogin()) {
+            header('Location:'.site_url('login'));
+            exit;
+        }
 
         $request_url = $this->config->item('uri_protocol');
         $url = str_replace('/admin.php/', '', $_SERVER[$request_url]);
@@ -34,12 +35,15 @@ class MY_Controller extends CI_Controller
         $data['menu_info'] = $this->menu->get_menu_url($url);
         $data['url'] = $url;
 
+        $data['breadcrumb'] = $this->breadCrumb($data['menu_info']);
+        // print_r($data['breadCrumb']);die;
 
         //左侧菜单
         $param['parent_id'] = 0;
         $param['status'] = 0;
         $list = $this->menu->get_menu_list($param);
         $data['menu'] = $this->create_tree($list, $param);
+        $data['user_info'] = $this->user_info;
 
         $this->load->view('public/header', $data);
     }
@@ -54,13 +58,32 @@ class MY_Controller extends CI_Controller
         $auth = get_cookie('ci_auth');
         $uid = $this->session->userdata('ci_uid');
         if ($uid) {
-            $info = $this->user->get_user_info($uid);
-            if ($info && $auth == $this->public_library($info['username'].$info['password'])) {
+            $info = $this->user->get_user_by_id($uid);
+            if ($info && $auth == $this->public_library->password($info['username'].$info['password'])) {
+                $this->user_info = $info;
                 return true;
             }
             return false;
         }
         return false;
+    }
+
+    /**
+     * 面包屑
+     * @return [type] [description]
+     */
+    public function breadCrumb($menu_info)
+    {
+        $parent_info = $info = [];
+        if ($menu_info) {
+            if ($menu_info['parent_id']) {
+                $parent_info = $this->menu->get_menu_info($menu_info['parent_id']);
+                $info[] = $parent_info;
+            }
+            $info[] = $menu_info;
+        }
+
+        return $info;
     }
 
     /**

@@ -33,12 +33,11 @@
                                                     <span class="lbl"></span>
                                                 </label>
                                             </th>
-                                            <th>菜单名称</th>
-                                            <th>链接</th>
-                                            <th>ICON图标</th>
-                                            <th class="hidden-480">状态</th>
-                                            <th>排序</th>
-                                            <th>描述</th>
+                                            <th>用户名</th>
+                                            <th>真实姓名</th>
+                                            <th>邮箱</th>
+                                            <th class="hidden-480">手机号</th>
+                                            <th>添加时间</th>
                                             <th class="hidden-480">操作</th>
                                         </tr>
                                     </thead>
@@ -54,22 +53,21 @@
                                                     <span class="lbl"></span>
                                                 </label>
                                             </td>
-                                            <td><?php echo $val['name'];?></td>
-                                            <td><?php echo $val['url'];?></td>
-                                            <td class="hidden-480"><i class="<?php echo $val['icon'];?> bigger-120"></i></td>
-                                            <td><?php echo $val['status'] == 0 ? '显示' : '隐藏';?></td>
-                                            <td><?php echo $val['sort'];?></td>
-                                            <td><?php echo $val['description'];?></td>
+                                            <td><?php echo $val['username'];?></td>
+                                            <td><?php echo $val['realname'];?></td>
+                                            <td><?php echo $val['email'];?></td>
+                                            <td><?php echo $val['phone'];?></td>
+                                            <td><?php echo $val['addtime'];?></td>
                                             <td>
                                                 <div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
-                                                    <a href="<?php echo base_url().'admin.php/menu/detail/'.$val['id']?>">
+                                                    <a href="<?php echo base_url().'admin.php/user/detail/'.$val['id']?>">
                                                     <button class="btn btn-xs btn-info">
                                                         <i class="icon-edit bigger-120"></i>
                                                         编辑
                                                     </button>
                                                     </a>
                                                     <a>
-                                                    <button class="btn btn-xs btn-danger" onclick="del_menu(<?php echo $val['id'];?>,this)">
+                                                    <button class="btn btn-xs btn-danger" onclick="del_user(<?php echo $val['id'];?>,this)">
                                                         <i class="icon-trash bigger-120"></i>
                                                         删除
                                                     </button>
@@ -77,74 +75,6 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                        <?php if (!empty($val['sub']) && is_array($val['sub'])) {
-                                                 foreach ($val['sub'] as $sub):
-                                        ?>
-                                        <tr>
-                                            <td class="center">
-                                                <label>
-                                                    <input type="checkbox" class="ace" />
-                                                    <span class="lbl"></span>
-                                                </label>
-                                            </td>
-                                            <td>-- <?php echo $sub['name'];?></td>
-                                            <td><?php echo $sub['url'];?></td>
-                                            <td class="hidden-480"><i class="<?php echo $sub['icon'];?> bigger-120"></i></td>
-                                            <td><?php echo $sub['status'] == 0 ? '显示' : '隐藏';?></td>
-                                            <td><?php echo $sub['sort'];?></td>
-                                            <td><?php echo $sub['description'];?></td>
-                                            <td>
-                                                <div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
-                                                    <a href="<?php echo base_url().'admin.php/menu/detail/'.$sub['id']?>">
-                                                    <button class="btn btn-xs btn-info">
-                                                        <i class="icon-edit bigger-120"></i>
-                                                        编辑
-                                                    </button>
-                                                    </a>
-                                                    <a>
-                                                    <button class="btn btn-xs btn-danger" onclick="del_menu(<?php echo $sub['id'];?>,this)">
-                                                        <i class="icon-trash bigger-120"></i>
-                                                        删除
-                                                    </button>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <?php if (!empty($sub['sub']) && is_array($sub['sub'])) {
-                                                 foreach ($sub['sub'] as $grand):
-                                        ?>
-                                        <tr>
-                                            <td class="center">
-                                                <label>
-                                                    <input type="checkbox" class="ace" />
-                                                    <span class="lbl"></span>
-                                                </label>
-                                            </td>
-                                            <td>---- <?php echo $grand['name'];?></td>
-                                            <td><?php echo $grand['url'];?></td>
-                                            <td class="hidden-480"><i class="<?php echo $grand['icon'];?> bigger-120"></i></td>
-                                            <td><?php echo $grand['status'] == 0 ? '显示' : '隐藏';?></td>
-                                            <td><?php echo $grand['sort'];?></td>
-                                            <td><?php echo $grand['description'];?></td>
-                                            <td>
-                                                <div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
-                                                    <a href="<?php echo base_url().'admin.php/menu/detail/'.$grand['id']?>">
-                                                    <button class="btn btn-xs btn-info">
-                                                        <i class="icon-edit bigger-120"></i>
-                                                        编辑
-                                                    </button>
-                                                    </a>
-                                                    <a>
-                                                    <button class="btn btn-xs btn-danger" onclick="del_menu(<?php echo $grand['id'];?>,this)">
-                                                        <i class="icon-trash bigger-120"></i>
-                                                        删除
-                                                    </button>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <?php endforeach;}?>
-                                        <?php endforeach;}?>
                                         <?php endforeach;}?>
                                     </tbody>
                                 </table>
@@ -162,13 +92,12 @@
 
         <?php include_once set_realpath(APPPATH.'views/public/footer.php');?>
 <script type="text/javascript">
-function del_menu(menu_id, obj)
+function del_user(user_id, obj)
 {
-
     if (confirm('确定要删除吗？')) {
-        $.post('<?=base_url()?>admin.php/menu/del/'+menu_id, function(data){
+        $.post('<?=base_url()?>admin.php/user/del/'+user_id, function(data){
             var data = eval('('+data+')');
-            if (data.status == 1) {
+            if (data.status == 0) {
                 $(obj).parents('tr').remove();
                 alert('删除成功');
                 return false;
@@ -181,7 +110,6 @@ function del_menu(menu_id, obj)
     } else {
         return false;
     }
-    
 }
 </script>
 </body>

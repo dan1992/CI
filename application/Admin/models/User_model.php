@@ -23,7 +23,7 @@ class User_model extends CI_Model
      * @param array $data 添加数据
      * @return boolean
      */
-    public function insert($data)
+    public function add_user($data)
     {
         if (empty($data)) {
             return false;
@@ -43,7 +43,7 @@ class User_model extends CI_Model
      * @param array  $data 更新数据
      * @return boolean
      */
-    public function update($id, $data)
+    public function update_user($id, $data)
     {
         if (empty($id) OR empty($data)) {
             return false;
@@ -62,9 +62,9 @@ class User_model extends CI_Model
         if (empty($id)) {
             return false;
         }
-        $sql   = 'SELECT id,email,username,password,openid,weiboid,groupid FROM '.$this->user.' WHERE id='.$id;
+        $sql   = 'SELECT id,email,username,phone,realname,password,openid,weiboid,groupid FROM '.$this->user.' WHERE id='.$id;
         $query = $this->db->query($sql);
-        return $query->row();
+        return $query->row_array();
     }
 
     /**
@@ -73,19 +73,20 @@ class User_model extends CI_Model
      * @param string $password 密码
      * @return boolean
      */
-    public function get_user_info($username, $password)
+    public function get_user_info($username, $password = '')
     {
-        if (empty($password) && empty($username)) {
+        if (empty($password) OR empty($username)) {
             return false;
         }
 
         $sql = 'SELECT u.id,email,username,password,openid,weiboid,groupid,power FROM '.$this->user.
-               ' as u WHERE email="'.$username.
-               '" OR username="'.$username.
-               '" ADN password = "'.md5($password).
-               '" JOIN '.$this->group.' as g ON u.groupid = g.id LIMIT 1';
+               ' as u JOIN '.$this->group.' as g ON u.groupid = g.id
+                 WHERE u.email="'.$username.
+               '" OR u.username="'.$username.
+               '" AND u.password = "'.md5($password).
+               '" LIMIT 1';
         $query = $this->db->query($sql);
-        return $query->row();
+        return $query->row_array();
     }
 
     /**
@@ -125,6 +126,7 @@ class User_model extends CI_Model
         if (!empty($param['email'])) {
             $this->db->like('email', $param['email']);
         }
+        $this->db->where('is_del', 0);
         $this->db->order_by('id','DESC');
         $query = $this->db->get($this->user, $limit, $start);
         return $query->result_array();
@@ -143,7 +145,8 @@ class User_model extends CI_Model
         if (!empty($param['email'])) {
             $this->db->like('email', $param['email']);
         }
-        return $this->db->count_all_results();
+        $this->db->where('is_del', 0);
+        return $this->db->count_all_results($this->user);
     }
 }
 
